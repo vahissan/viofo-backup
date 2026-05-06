@@ -8,6 +8,10 @@ Automatically syncs footage from a **Viofo A229 Pro** dashcam to local storage w
 - Configurable retention by age and total disk size
 - Rotating log files
 
+## Acknowledgements
+
+This project was inspired by a [Reddit thread](https://www.reddit.com/r/VIOFO/comments/1kdcjsf/wifi_station_mode_sync_at_home/) in r/VIOFO that demonstrated using WiFi Station Mode for home network sync, and by [RobXYZ/viofosync](https://github.com/RobXYZ/viofosync), which pioneered the approach of talking to the dashcam's HTTP API from a home server.
+
 ## Quick Start
 
 ### Docker
