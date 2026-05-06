@@ -1,6 +1,7 @@
 package camera
 
 import (
+	"context"
 	"encoding/xml"
 	"fmt"
 	"net/http"
@@ -22,8 +23,16 @@ func NewClient(ip string) *Client {
 }
 
 // IsOnline returns true when the camera is reachable and returns Status=0.
-func (c *Client) IsOnline() bool {
-	resp, err := c.httpClient.Get(c.baseURL + "/?custom=1&cmd=3016")
+// The check uses a 5-second timeout appropriate for a local network.
+func (c *Client) IsOnline(ctx context.Context) bool {
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.baseURL+"/?custom=1&cmd=3016", nil)
+	if err != nil {
+		return false
+	}
+	resp, err := c.httpClient.Do(req)
 	if err != nil || resp.StatusCode != http.StatusOK {
 		if resp != nil {
 			resp.Body.Close()

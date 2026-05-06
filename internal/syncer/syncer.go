@@ -49,7 +49,7 @@ func New(
 // While online, sync passes run back-to-back with no delay.
 // While offline, the loop sleeps for camera.heartbeat_interval between checks.
 func (s *Syncer) Run(ctx context.Context) error {
-	online := false
+	var online *bool // nil on first iteration to guarantee a state log at startup
 
 	for {
 		select {
@@ -58,17 +58,17 @@ func (s *Syncer) Run(ctx context.Context) error {
 		default:
 		}
 
-		nowOnline := s.camera.IsOnline()
-		if nowOnline != online {
-			online = nowOnline
-			if online {
+		nowOnline := s.camera.IsOnline(ctx)
+		if online == nil || *online != nowOnline {
+			online = &nowOnline
+			if nowOnline {
 				slog.Info("camera online")
 			} else {
 				slog.Info("camera offline")
 			}
 		}
 
-		if online {
+		if nowOnline {
 			if err := s.syncOnce(ctx); err != nil {
 				if ctx.Err() != nil {
 					return ctx.Err()

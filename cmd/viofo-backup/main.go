@@ -31,6 +31,11 @@ func main() {
 	logger.Setup(cfg.Logging)
 	slog.Info("starting", "camera", cfg.Camera.IP, "dir", cfg.Download.Directory)
 
+	if err := os.MkdirAll(cfg.Download.Directory, 0755); err != nil {
+		slog.Error("create download directory", "err", err)
+		os.Exit(1)
+	}
+
 	if err := downloader.CleanupStale(cfg.Download.Directory); err != nil {
 		slog.Warn("stale cleanup", "err", err)
 	}
