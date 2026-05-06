@@ -19,7 +19,7 @@ docker run -d \
   -v /path/to/config.yaml:/app/config.yaml:ro \
   -v /path/to/data:/data \
   -v /path/to/logs:/logs \
-  youruser/viofo-backup:latest
+  vahissan/viofo-backup:latest
 ```
 
 ### Docker Compose
@@ -27,7 +27,7 @@ docker run -d \
 ```yaml
 services:
   viofo-backup:
-    image: youruser/viofo-backup:latest
+    image: vahissan/viofo-backup:latest
     volumes:
       - /path/to/config.yaml:/app/config.yaml:ro
       - dashcam-data:/data
@@ -86,7 +86,7 @@ The SQLite tracker database is stored at `/data/.viofo-backup.db`.
 ## Building from Source
 
 ```bash
-git clone https://github.com/youruser/viofo-backup
+git clone https://github.com/vahissan/viofo-backup
 cd viofo-backup
 go build -o dist/viofo-backup ./cmd/viofo-backup
 ```
@@ -97,5 +97,5 @@ Requires Go 1.25+. No CGO — the binary is fully static.
 
 ```bash
 docker buildx create --use --name multibuilder --driver docker-container
-docker buildx build --platform linux/amd64,linux/arm64 -t youruser/viofo-backup:latest --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t vahissan/viofo-backup:latest --push .
 ```
