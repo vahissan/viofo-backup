@@ -30,8 +30,11 @@ go test -race ./...
 # Lint (requires golangci-lint)
 golangci-lint run
 
-# Build Docker image
+# Build Docker image (single platform)
 docker build -t viofo-backup .
+
+# Build and push multi-platform image (amd64 + arm64)
+docker buildx build --platform linux/amd64,linux/arm64 -t vahissan/viofo-backup:latest --push .
 
 # Run via Docker Compose
 docker compose up -d

@@ -92,3 +92,10 @@ go build -o dist/viofo-backup ./cmd/viofo-backup
 ```
 
 Requires Go 1.25+. No CGO — the binary is fully static.
+
+### Multi-platform Docker image (amd64 + arm64)
+
+```bash
+docker buildx create --use --name multibuilder
+docker buildx build --platform linux/amd64,linux/arm64 -t vahissan/viofo-backup:latest --push .
+```
