@@ -30,17 +30,21 @@ func Setup(cfg config.LoggingConfig) {
 		}
 	}
 
-	opts := &slog.HandlerOptions{Level: slog.LevelInfo}
-
+	loc := time.Local
 	if tz := os.Getenv("TZ"); tz != "" {
-		if loc, err := time.LoadLocation(tz); err == nil {
-			opts.ReplaceAttr = func(_ []string, a slog.Attr) slog.Attr {
-				if a.Key == slog.TimeKey {
-					a.Value = slog.StringValue(a.Value.Time().In(loc).Format(time.RFC3339Nano))
-				}
-				return a
-			}
+		if l, err := time.LoadLocation(tz); err == nil {
+			loc = l
 		}
+	}
+
+	opts := &slog.HandlerOptions{
+		Level: slog.LevelInfo,
+		ReplaceAttr: func(_ []string, a slog.Attr) slog.Attr {
+			if a.Key == slog.TimeKey {
+				a.Value = slog.StringValue(a.Value.Time().In(loc).Format("2006-01-02 15:04:05 -07:00"))
+			}
+			return a
+		},
 	}
 
 	slog.SetDefault(slog.New(slog.NewTextHandler(w, opts)))
