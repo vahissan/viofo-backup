@@ -1,0 +1,12 @@
+services:
+  viofo-backup:
+    build: .
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - dashcam-data:/data
+      - dashcam-logs:/logs
+    restart: unless-stopped
+
+volumes:
+  dashcam-data:
+  dashcam-logs:

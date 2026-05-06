@@ -16,7 +16,7 @@ github.com/vahissan/viofo-backup
 
 ```bash
 # Build
-go build ./cmd/viofo-backup
+go build -o dist/viofo-backup ./cmd/viofo-backup
 
 # Run all tests
 go test ./...
@@ -196,5 +196,5 @@ The container runs as a non-root user. The `Dockerfile` uses a multi-stage build
 |---|---|
 | `gopkg.in/yaml.v3` | Config parsing |
 | `modernc.org/sqlite` | Pure-Go SQLite (no CGO required) |
-| `lumberjack` | Log file rotation (used as `slog` writer) |
+| `gopkg.in/lumberjack.v2` | Log file rotation (used as `slog` writer) |
 | Standard library | HTTP client, XML parsing, filesystem ops |

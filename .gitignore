@@ -1,0 +1,6 @@
+*.db
+*.tmp
+/data/
+/logs/
+/dist/
+config.yaml
