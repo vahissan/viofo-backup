@@ -19,6 +19,7 @@ docker run -d \
   -v /path/to/config.yaml:/app/config.yaml:ro \
   -v /path/to/data:/data \
   -v /path/to/logs:/logs \
+  -e TZ=America/Vancouver \
   vahissan/viofo-backup:latest
 ```
 
@@ -32,6 +33,8 @@ services:
       - /path/to/config.yaml:/app/config.yaml:ro
       - dashcam-data:/data
       - dashcam-logs:/logs
+    environment:
+      - TZ=America/Vancouver        # optional: log timestamps in local time
     restart: unless-stopped
 
 volumes:

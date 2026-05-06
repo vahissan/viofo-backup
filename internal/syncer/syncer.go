@@ -135,6 +135,9 @@ func (s *Syncer) syncOnce(ctx context.Context) error {
 				return ctx.Err()
 			}
 			slog.Warn("download failed", "file", f.Name, "err", err)
+			if !s.camera.IsOnline(ctx) {
+				return fmt.Errorf("camera went offline during sync")
+			}
 			continue
 		}
 

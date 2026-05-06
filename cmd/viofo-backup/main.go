@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"syscall"
+	_ "time/tzdata" // embed IANA timezone database so TZ env var works in Alpine
 
 	"github.com/vahissan/viofo-backup/internal/camera"
 	"github.com/vahissan/viofo-backup/internal/config"
