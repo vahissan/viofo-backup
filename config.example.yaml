@@ -1,0 +1,22 @@
+camera:
+  ip: "10.60.1.8"
+  heartbeat_interval: "5m"
+  categories:
+    - movie
+    - parking
+    - emergency
+    - photo
+
+download:
+  directory: "/data"
+
+retention:
+  max_age: "30d"
+  max_size: "50GB"
+
+logging:
+  file: "/logs/viofo-backup.log"
+  max_size_mb: 100
+  max_backups: 5
+  max_age_days: 30
+  compress: true
