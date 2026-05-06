@@ -19,7 +19,7 @@ docker run -d \
   -v /path/to/config.yaml:/app/config.yaml:ro \
   -v /path/to/data:/data \
   -v /path/to/logs:/logs \
-  vahissan/viofo-backup:latest
+  youruser/viofo-backup:latest
 ```
 
 ### Docker Compose
@@ -27,7 +27,7 @@ docker run -d \
 ```yaml
 services:
   viofo-backup:
-    image: vahissan/viofo-backup:latest
+    image: youruser/viofo-backup:latest
     volumes:
       - /path/to/config.yaml:/app/config.yaml:ro
       - dashcam-data:/data
@@ -45,12 +45,12 @@ Create a `config.yaml` from the example below. The only required field is `camer
 
 ```yaml
 camera:
-  ip: "10.60.1.8"
+  ip: "192.168.1.100"             # IP assigned to your dashcam on your network
   heartbeat_interval: "5m"       # how often to poll when camera is offline
   categories:                    # omit to sync all categories
-    - movie                      # DCIM\Movie\        regular clips
+    - movie                      # DCIM\Movie\         regular clips
     - parking                    # DCIM\Movie\Parking\ parking mode
-    - emergency                  # DCIM\Movie\RO\     event/protected clips
+    - emergency                  # DCIM\Movie\RO\      event/protected clips
     - photo                      # DCIM\Photo\
 
 download:
@@ -74,7 +74,7 @@ Downloads are organised by date and category:
 
 ```
 /data/
-  2026-05-05/
+  2024-01-15/
     Movie/
     Movie/Parking/
     Movie/Emergency/
@@ -86,7 +86,7 @@ The SQLite tracker database is stored at `/data/.viofo-backup.db`.
 ## Building from Source
 
 ```bash
-git clone https://github.com/vahissan/viofo-backup
+git clone https://github.com/youruser/viofo-backup
 cd viofo-backup
 go build -o dist/viofo-backup ./cmd/viofo-backup
 ```
@@ -96,6 +96,6 @@ Requires Go 1.25+. No CGO — the binary is fully static.
 ### Multi-platform Docker image (amd64 + arm64)
 
 ```bash
-docker buildx create --use --name multibuilder
-docker buildx build --platform linux/amd64,linux/arm64 -t vahissan/viofo-backup:latest --push .
+docker buildx create --use --name multibuilder --driver docker-container
+docker buildx build --platform linux/amd64,linux/arm64 -t youruser/viofo-backup:latest --push .
 ```

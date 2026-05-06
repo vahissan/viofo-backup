@@ -1,5 +1,5 @@
 camera:
-  ip: "10.60.1.8"
+  ip: "192.168.1.100"
   heartbeat_interval: "5m"
   categories:
     - movie

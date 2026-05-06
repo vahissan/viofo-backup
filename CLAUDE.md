@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Automated dashcam file sync service for the Viofo A229 Pro. The app runs in Docker, waits for the dashcam to appear on the home network (static IP `10.60.1.8`), fetches the file list via the camera's XML API, and downloads new files to a mounted volume. State is tracked in SQLite so partial syncs survive sudden camera disconnections (car turning off mid-download).
+Automated dashcam file sync service for the Viofo A229 Pro. The app runs in Docker, waits for the dashcam to appear on the home network (configured static IP), fetches the file list via the camera's XML API, and downloads new files to a mounted volume. State is tracked in SQLite so partial syncs survive sudden camera disconnections (car turning off mid-download).
 
 ## Module
 
@@ -151,7 +151,7 @@ Convert FPATH to URL: strip `A:\`, replace `\` with `/`, prepend `http://<ip>/`.
 
 ```
 FPATH: A:\DCIM\Photo\2026_0505_175704_047965PF.JPG
-URL:   http://10.60.1.8/DCIM/Photo/2026_0505_175704_047965PF.JPG
+URL:   http://192.168.1.100/DCIM/Photo/2026_0505_175704_047965PF.JPG
 ```
 
 Server responds with `Accept-Ranges: bytes` — use range requests to resume interrupted downloads.
@@ -160,7 +160,7 @@ Server responds with `Accept-Ranges: bytes` — use range requests to resume int
 
 ```yaml
 camera:
-  ip: "10.60.1.8"
+  ip: "192.168.1.100"
   heartbeat_interval: "5m"     # how often to poll while waiting
   categories:                  # omit to download all; valid: movie, parking, emergency, photo
     - movie
