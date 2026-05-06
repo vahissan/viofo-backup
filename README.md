@@ -27,12 +27,15 @@ docker run -d \
   vahissan/viofo-backup:latest
 ```
 
+If your data directory is owned by a specific user, add `-u UID:GID` to match it and avoid permission errors.
+
 ### Docker Compose
 
 ```yaml
 services:
   viofo-backup:
     image: vahissan/viofo-backup:latest
+    user: "1000:1000"               # optional: set to UID:GID that owns your data directory
     volumes:
       - /path/to/config.yaml:/app/config.yaml:ro
       - dashcam-data:/data
